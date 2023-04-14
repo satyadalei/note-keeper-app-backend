@@ -1,5 +1,5 @@
-const dotenv = require('dotenv').config();
-const express = require('express');
+const dotenv = require('dotenv').config(); // find env data
+const express = require('express'); //
 const User = require('../models/User');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
@@ -43,7 +43,6 @@ router.post("/createuser", [
                res.json({token});
             }
          } catch (error) {
-            console.log(error);
             return res.status(500).json({ "message": "Something gone wrong" });
          }
       }
