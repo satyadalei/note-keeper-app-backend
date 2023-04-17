@@ -10,7 +10,7 @@ router.get("/fetchallnotes", fetchUser, async (req, res) => {
     const notes = await Notes.find({ userId: req.userId });
     res.send(notes);
 });
-//::ROUTE:2:::++++++++++++++++++++++++  add a note ++++++++++++++++++++++++
+//::ROUTE:2::: add a note ++++++++++++++++++++++++
 router.post(
     "/addnote",
     fetchUser,
@@ -32,7 +32,7 @@ router.post(
                     userId: req.userId,
                 });
                 const savedNote = await note.save();
-                res.send({ savedNote });
+                res.json(savedNote);
             } catch (error) {
                 return res.status(500).json({ message: "Something gone wrong" });
             }
@@ -106,7 +106,7 @@ router.delete("/deletenote/:id", fetchUser, async (req, res) => {
             if (foundNote.userId.toString() === userId) {
                 // delete note by id
                 const deletedNote = await Notes.findByIdAndDelete(noteId);
-                res.send("note deleted successfullys");
+                res.json(deletedNote);
             } else {
                 res.send("You are not allowed.");
             }
