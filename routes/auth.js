@@ -16,7 +16,9 @@ router.post("/createuser", [
       // ------------- checking whether  user given right data ----------   
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-         return res.status(400).json({ errors: errors.array() });
+         const msg = "invalid credentials";
+         const success = false ;
+         return res.status(400).json({ success,msg,errors: errors.array() });
       }
       else {
          try {
@@ -25,7 +27,9 @@ router.post("/createuser", [
             // returns null if not found bcoz of async await
             if (isUserExist) {
                // user found
-               return res.status(400).json({ "Message": "This user already exist." })
+               const success = false;
+               const msg = "user exists";
+               return res.status(400).json({msg,success,"Message": "This user already exist." })
             } else {
                // create new user --
                const salt = await bcrypt.genSalt(10);
@@ -39,11 +43,15 @@ router.post("/createuser", [
                const data = {
                   id : user.id
                }
+               const success = true;
+               const msg  = "user created";
                const token = jwt.sign(data,process.env.JWT_SIGN_SECRET)
-               res.json({token});
+               res.json({msg,success,token});
             }
          } catch (error) {
-            return res.status(500).json({ "message": "Something gone wrong" });
+            const msg = "server error";
+            const success = false;
+            return res.status(500).json({ success,msg,"message": "Something gone wrong" });
          }
       }
    })
