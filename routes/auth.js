@@ -69,14 +69,16 @@ router.post("/login",[
                //---user exists
                const validUser =await bcrypt.compare(password,user.password); // compare user password with saved password
                if(!validUser) {
-                  res.send("not a Valid user"); //password did not matched
+                  const success  = false;
+                  res.send({ success ,message :"not a Valid user"}); //password did not matched
                }else{
                   //password matched
                   const data = {
                      id : user.id
                   }
+                  const success  = true;
                   const token = jwt.sign(data,process.env.JWT_SIGN_SECRET)
-                  res.json({token});
+                  res.json({success,token});
                }
             }
           } catch (error) {

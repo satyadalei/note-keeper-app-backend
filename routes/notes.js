@@ -43,7 +43,7 @@ router.post(
 router.put("/updatenote/:id", fetchUser, async (req, res) => {
     try {
         
-        const noteId = req.params.id;
+    const noteId = req.params.id;
     const userId = req.userId;
     const { title, description, tag } = req.body;
     // first check whether note exist or not
@@ -74,7 +74,7 @@ router.put("/updatenote/:id", fetchUser, async (req, res) => {
                 { $set: modifiedNote },
                 { new: true }
             );
-            res.json({ note });
+            res.json(note);
         } else {
             //user is not authorized to modify note
             res.send("Not allowed to modify");
