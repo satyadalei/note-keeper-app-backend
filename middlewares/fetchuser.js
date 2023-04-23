@@ -1,7 +1,7 @@
 const dotenv = require('dotenv').config();
 var jwt = require('jsonwebtoken');
-const fetchuser = (req,res,next)=>{
-    const token = req.header('auth-token'); // getting token from req header 
+const fetchuser = async (req,res,next)=>{
+    const token = await req.header('auth-token'); // getting token from req header 
     if (!token) {
         // if token not found
         return res.status(401).json({ "message": "You are not authorized to access data"});

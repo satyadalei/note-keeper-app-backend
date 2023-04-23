@@ -43,10 +43,11 @@ router.post("/createuser", [
                const data = {
                   id : user.id
                }
+               const userId = user._id;
                const success = true;
                const msg  = "user created";
                const token = jwt.sign(data,process.env.JWT_SIGN_SECRET)
-               res.json({msg,success,token});
+               res.json({msg,success,token,userId : userId});
             }
          } catch (error) {
             const msg = "server error";
@@ -85,8 +86,9 @@ router.post("/login",[
                      id : user.id
                   }
                   const success  = true;
+                  const userId = user._id;
                   const token = jwt.sign(data,process.env.JWT_SIGN_SECRET)
-                  res.json({success,token});
+                  res.json({success,token,userId:userId});
                }
             }
           } catch (error) {
@@ -102,6 +104,7 @@ router.post("/getuser",fetchUser,async (req,res)=>{
    try {
      const userId = req.userId ;// stores only id of user
      const user = await User.findOne({id:userId}).select("-password");//gives user credentias without password
+     console.log(user);
       res.send({user});
    } catch (error) {
       console.log(error);
